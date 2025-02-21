@@ -1,0 +1,19 @@
+services:
+  web:
+    restart: always
+    user: 1901:1901
+    build: ./app
+    command: gunicorn demo.wsgi:application --workers 3 --timeout 120 --bind 0.0.0.0:8000
+    expose:
+      - 8000
+    env_file:
+      - ./.env
+  nginx:
+    restart: always
+    build: ./nginx
+    env_file:
+      - ./.env.nginx
+    ports:
+      - 80:80
+    depends_on:
+      - web
