@@ -73,4 +73,6 @@ RUN chown -R ${USER}:${USER} $APP_HOME
 USER ${UID}:${GID}
 
 # run entrypoint.prod.sh
-ENTRYPOINT ["/home/dduser/web/entrypoint.sh"]
+#ENTRYPOINT ["/home/dduser/web/entrypoint.sh"]
+
+CMD ["gunicorn", "demo.wsgi:application", "--workers", "3", "--timeout", "120", "--bind", "0.0.0.0:8000"]
